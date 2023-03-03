@@ -26,7 +26,7 @@ const BookSchema = Schema({
         type: String,
         required: true
     },
-    description: {
+    /*description: {
         type: String,
         required: true
     },
@@ -42,16 +42,10 @@ const BookSchema = Schema({
         type: String,
         required: false
     }],
-    rating: {
-        rate: {
-            type: Number,
-            required: false
-        },
-        count: {
-            type: Number,
-            required: false
-        },
-    },
+    rate: {
+        type: Number,
+        required: false
+    }, 
     numberPages: {
         type: Number,
         required: false
@@ -84,11 +78,21 @@ const BookSchema = Schema({
     aboutAuthor: {
         type: String,
         required: false
+    },*/
+    price: {
+        type: Number,
+        required: true
     },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
+});
+
+BookSchema.method('toJSON', function(){
+    const {_id, __v, ...object} = this.toObject();
+    object.bid = _id;
+    return object;
 });
 
 module.exports = model('Book',BookSchema);

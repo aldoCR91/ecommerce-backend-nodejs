@@ -10,7 +10,14 @@ const router = Router();
 
 
 // Rutas publicas
-router.get('/:bid', getBook);
+router.get(
+    '/:bid',
+    [
+        check('bid','El id del libro no es valido').isMongoId(),
+        validarCampos
+    ],
+    getBook);
+
 router.get('/', getBooks);
 
 // Rutas privadas
@@ -24,19 +31,19 @@ router.post(
         check('postDate','La fecha de publicacion es requerida').isDate(),
         check('format','El formato es requerido').not().isEmpty(),      
         check('language','Es necesario especificar el lenguaje').not().isEmpty(),
-        check('description','La descripcion es requerida').not().isEmpty(),
-        check('category','La categoria del libro es requerida').not().isEmpty(),
-        check('image','La url de la imagen del libro es requerida').isURL(),
-        check('issue','La editorial del libro es requerida').not().isEmpty(),
-        check('rating','La editorial del libro es requerida').not().isEmpty(),
-        check('numberPages','La editorial del libro es requerida').not().isEmpty(),
-        check('ISBN10','La editorial del libro es requerida').not().isEmpty(),
-        check('ISBN13','El precio es requerido').isNumeric(),
-        check('readAge','La descripcion es necesaria').not().isEmpty(),
-        check('measureLexile','La categoria es necesaria').notEmpty(),
-        check('ItemWeight','link de la imagen es necesario').notEmpty().isLength({min:5}),
-        check('dimensions','link de la imagen es necesario').notEmpty().isLength({min:5}),
-        check('aboutAuthor','link de la imagen es necesario').notEmpty().isLength({min:5}),
+        //check('description','La descripcion es requerida').not().isEmpty(),
+        //check('category','La categoria del libro es requerida').not().isEmpty(),
+        // check('image','La url de la imagen del libro es requerida').isURL(),
+        // check('issue','La editorial del libro es requerida').not().isEmpty(),
+        // check('rating','La editorial del libro es requerida').not().isEmpty(),
+        // check('numberPages','La editorial del libro es requerida').not().isEmpty(),
+        // check('ISBN10','La editorial del libro es requerida').not().isEmpty(),
+        // check('ISBN13','El precio es requerido').isNumeric(),
+        // check('readAge','La descripcion es necesaria').not().isEmpty(),
+        // check('measureLexile','La categoria es necesaria').notEmpty(),
+        // check('ItemWeight','link de la imagen es necesario').notEmpty().isLength({min:5}),
+        // check('dimensions','link de la imagen es necesario').notEmpty().isLength({min:5}),
+        // check('aboutAuthor','link de la imagen es necesario').notEmpty().isLength({min:5}),
         check('price','link de la imagen es necesario').notEmpty().isLength({min:5}),
         check('user','El usuario es necesario').isMongoId(),
         validarCampos
@@ -44,9 +51,9 @@ router.post(
     createBook
 );
 
-router.put('/:pid',validarJWT, updateBook);
+router.put('/:bid',validarJWT, updateBook);
 
-router.delete('/:pid',validarJWT, deleteBook);
+router.delete('/:bid',validarJWT, deleteBook);
 
 
 
